@@ -21,19 +21,25 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(''); // Reset status on new submission
+
+    // Create a FormData object. This is what Django expects.
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('email', formData.email);
+    data.append('message', formData.message);
 
     try {
-      const response = await fetch('https://formspree.io/f/your-form-id', {
+      // Change the URL to your local Django server's endpoint.
+      const response = await fetch('http://127.0.0.1:8000/contact/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        // No 'Content-Type' header needed; the browser sets it for FormData.
+        body: data, // Send the FormData object.
       });
 
       if (response.ok) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', message: '' }); // Clear the form
       } else {
         setSubmitStatus('error');
       }
@@ -60,7 +66,7 @@ export default function Contact() {
     {
       name: 'Email',
       icon: 'ri-mail-fill',
-      url: 'bhuvaneshbhuvan128@gmail.com',
+      url: 'mailto:bhuvaneshbhuvan128@gmail.com',
       color: 'hover:text-red-500'
     },
     {
@@ -98,7 +104,7 @@ export default function Contact() {
                   <div>
                     <p className="font-semibold text-gray-900">Email</p>
                     <a href="mailto:v.bhuvanesh.dev@gmail.com" className="text-blue-600 hover:text-blue-800 cursor-pointer">
-                     bhuvaneshbhuvan128@gmail.com
+                      bhuvaneshbhuvan128@gmail.com
                     </a>
                   </div>
                 </div>
@@ -108,7 +114,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Phone</p>
-                    <a href="tel:+919876543210" className="text-blue-600 hover:text-blue-800 cursor-pointer">
+                    <a href="tel:+919342344427" className="text-blue-600 hover:text-blue-800 cursor-pointer">
                       +91 9342344427
                     </a>
                   </div>
@@ -119,7 +125,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Location</p>
-                    <p className="text-gray-600">karur, Tamil Nadu, India</p>
+                    <p className="text-gray-600">Karur, Tamil Nadu, India</p>
                   </div>
                 </div>
               </div>
