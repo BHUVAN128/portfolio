@@ -31,7 +31,7 @@ export default function Contact() {
 
     try {
       // Change the URL to your local Django server's endpoint.
-      const response = await fetch('http://127.0.0.1:8000/contact/', {
+      const response = await fetch('https://portfolio-backend-bhuvanesh.onrender.com', {
         method: 'POST',
         // No 'Content-Type' header needed; the browser sets it for FormData.
         body: data, // Send the FormData object.
